@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>진학 희망자 대시보드</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap wide">
+    <header>
+      <div class="lab" id="labName"></div>
+      <h1>진학 희망자 대시보드</h1>
+      <p>받은 메일에서 찾은 진학 문의와 등록 폼 지원자를 한곳에서 관리합니다.</p>
+    </header>
+    <div class="demo-banner" id="demoBanner" hidden>데모 모드입니다. 아래 문의는 예시 데이터이며, 관리자 키는 아무 값이나 입력해도 됩니다.</div>
+
+    <div class="card" id="login">
+      <h2>관리자 로그인</h2>
+      <form id="loginForm" class="toolbar">
+        <input type="password" id="key" placeholder="관리자 키 (Apps Script의 ADMIN_KEY)" autocomplete="current-password">
+        <button type="submit">불러오기</button>
+      </form>
+      <div class="msg err" id="loginMsg"></div>
+    </div>
+
+    <section id="main" hidden>
+      <nav class="tabs" role="tablist">
+        <button type="button" role="tab" data-tab="mail" aria-selected="true">이메일 문의 <span id="cntMail"></span></button>
+        <button type="button" role="tab" data-tab="form" aria-selected="false">등록 폼 <span id="cntForm"></span></button>
+      </nav>
+
+      <!-- 이메일 문의 -->
+      <div id="tab-mail">
+        <div class="stats" id="mailStats"></div>
+        <div class="charts">
+          <div class="card chart-card">
+            <h2>월별 문의 수 <span class="hint">최근 12개월</span></h2>
+            <div class="bars" id="chartMonth"></div>
+          </div>
+          <div class="card chart-card">
+            <h2>관심 분야</h2>
+            <div class="hbars" id="chartInterest"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="toolbar">
+            <input type="text" id="mq" placeholder="이름·이메일·학교·제목·요약 검색">
+            <select id="mProgram"><option value="">모든 과정</option></select>
+            <select id="mInterest"><option value="">모든 분야</option></select>
+            <select id="mStatus"><option value="">모든 상태</option></select>
+            <select id="mReplied"><option value="">답장 여부</option><option value="아니오">답장 안 함</option><option value="예">답장함</option></select>
+            <button type="button" id="scan">지금 메일 검사</button>
+            <button class="ghost" id="mCsv" type="button">CSV</button>
+          </div>
+          <div class="msg" id="scanMsg"></div>
+        </div>
+        <div class="table-wrap">
+          <table class="list">
+            <thead><tr><th>받은 날</th><th>보낸 사람</th><th>제목 · 요약</th><th>학교 · 학과</th><th>희망 과정</th><th>관심 분야</th><th>답장</th><th>상태</th></tr></thead>
+            <tbody id="mailRows"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 등록 폼 -->
+      <div id="tab-form" hidden>
+        <div class="stats" id="formStats"></div>
+        <div class="card">
+          <div class="toolbar">
+            <input type="text" id="q" placeholder="이름·학교·자기소개 검색">
+            <select id="fProgram"><option value="">모든 과정</option></select>
+            <select id="fInterest"><option value="">모든 분야</option></select>
+            <select id="fStatus"><option value="">모든 상태</option></select>
+            <button class="ghost" id="csv" type="button">CSV</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="list">
+            <thead><tr><th>접수일</th><th>이름</th><th>학교 · 학과</th><th>현재 상태</th><th>희망 과정</th><th>입학 시기</th><th>관심 분야</th><th>GitHub</th><th>상태</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="foot"><button class="ghost" id="reload" type="button">새로고침</button></div>
+    </section>
+  </div>
+  <div class="tip" id="tip" hidden></div>
+
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
